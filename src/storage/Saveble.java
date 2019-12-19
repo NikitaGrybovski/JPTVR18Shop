@@ -20,6 +20,6 @@ public interface Saveble {
     public Collection<? extends Buyer> loadBuyers();
     public void saveProducts(ArrayList<Product> products);
     public Collection<? extends Product> loadProducts();
-//    public void savePurchases(ArrayList<Purchase> purchases);
-//    public Collection<? extends Purchase> loadPurchase();
+    public void savePurchases(ArrayList<Purchase> purchases);
+    public Collection<? extends Purchase> loadPurchase();
 }

@@ -36,8 +36,8 @@ public class Purchase implements Serializable {
     public Purchase() {
     }
 
-    public Purchase(Long id, Date giveOfDate, Buyer buyer, Product product) {
-        this.id = id;
+    public Purchase(Date giveOfDate, Buyer buyer, Product product) {
+        
         this.giveOfDate = giveOfDate;
         this.buyer = buyer;
         this.product = product;

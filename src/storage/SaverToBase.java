@@ -81,16 +81,32 @@ public class SaverToBase implements Saveble {
           }
        
     }
-//    @Override
-//    public void savePurchases(ArrayList<Purchase> purchases) {
-//       
-//        
-//    }
-//    
-//    
-//    @Override
-//    public Collection<? extends Purchase> loadPurchase(){
-//    
-//        return null;
-//    }
+    @Override
+    public void savePurchases(ArrayList<Purchase> purchases) {
+       tx.begin();
+        for (int i = 0; i < purchases.size(); i++) {
+            
+            Purchase purchase = purchases.get(i);
+           if(purchase.getId() == null){
+               em.persist(purchase);
+            }
+           
+           
+           
+       }
+       tx.commit();
+        
+    }
+    
+    
+    @Override
+    public Collection<? extends Purchase> loadPurchase(){
+    
+        try{
+           return em.createQuery("SELECT purchase FROM Purchase purchase")
+               .getResultList();
+       } catch (Exception e){
+           return null;
+          }
+    }
 }

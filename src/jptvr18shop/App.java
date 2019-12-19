@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import myclasses.BuyerProvider;
 import myclasses.ProductProvider;
+import myclasses.ShopProvider;
 
 import storage.Saveble;
 import storage.SaverToBase;
@@ -26,18 +27,19 @@ public class App {
     
 private ArrayList<Product> product = new ArrayList<>();
 private ArrayList<Buyer> buyer = new ArrayList<>();
-private ArrayList<Purchase> purchase = new ArrayList<>();
+private ArrayList<Purchase> purchases = new ArrayList<>();
 private Saveble saveble;
     public App() {
         this.saveble = new SaverToBase();
         this.product.addAll(saveble.loadProducts());
         this.buyer.addAll(saveble.loadBuyers());
-        //this.histories.addAll(saveble.loadHistories());
+        this.purchases.addAll(saveble.loadPurchase());
     }
 
     public void run() {
         System.out.println("Магазин");
         boolean repeat = true;
+        boolean buys = true;
         do {
             System.out.println("0. Выход из программы");
             System.out.println("1. Создание продукта");
@@ -48,6 +50,7 @@ private Saveble saveble;
             System.out.println("6. Функция подсчета прибыли магазина");
             System.out.println("Выберите задачу: ");
             repeat = true;
+            
             Scanner scanner = new Scanner(System.in);
             int task = scanner.nextInt();
             switch (task) {
@@ -69,7 +72,21 @@ private Saveble saveble;
                     saveble.saveBuyers(buyer);
                     break;
                 case 3:
-           
+                    
+                    do{
+                    ShopProvider shopProvider = new ShopProvider();
+                    Purchase purchase = shopProvider.takeOnProduct(product, buyer, purchases);
+                    saveble.savePurchases(purchases);
+                    System.out.println("Продолжить покупку, если да то введите 1, если нет то 0");
+                    int rep = scanner.nextInt();
+                    if (rep == 0){
+                        buys = false;
+                    }else if(rep== 1){
+                        buys = true;
+                    }
+                    }while(buys);
+                    
+                    
                     
                 case 4:
                     for (int i = 0; i < product.size(); i++) {

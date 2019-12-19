@@ -58,10 +58,10 @@
 //        int indexReader = scanner.nextInt();
 //        Reader reader = readers.get(indexReader-1);
 //        History history = new History(new Date(), null, book, reader);
-////        History history = new History();
-////        history.setBook(book);
-////        history.setReader(reader);
-////        history.setGiveOfDate(new Date());
+//       History history = new History();
+//       history.setBook(book);
+//       history.setReader(reader);
+//       history.setGiveOfDate(new Date());
 //        return history;
 //    }
 //
