@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package myclasses;
 
 import entity.Buyer;
@@ -45,21 +40,35 @@ public class ShopProvider {
                 System.out.println(i+1+". "+products.get(i).toString());
                 counterProducts++;
             }
+            
         }
-        if(counterProducts == 0){
-            System.out.println("Продуктов нету.");
-            return null;
-        }
-       
+        
+        
         System.out.println("Выберите продукт: ");
         int indexProduct = scanner.nextInt();
+        Product product = products.get(indexProduct-1);
+        boolean next = true;
+        do{
+            if (product.getCount() == 0){
+                System.out.println("Этого продукта нету");
+                indexProduct = 0;
+                System.out.println("Выберите продукт: ");
+                
+                indexProduct = scanner.nextInt();
+                product = products.get(indexProduct-1);
+                next = true;
+            }else if(product.getCount() > 0){
+                next = false;
+            }
+        }while(next);
+        
         System.out.println("Выберите количество: ");
         int indexCount = scanner.nextInt();
-        Product product = products.get(indexProduct-1);
+        
         double countPrice = 0;
         if(product.getPrice() != 0){
             
-            countPrice = countPrice + product.getPrice();
+            countPrice = countPrice + product.getPrice() * indexCount ;
             int countofProduct = product.getCount()-indexCount;
             product.setCount(countofProduct);
              
@@ -72,8 +81,7 @@ public class ShopProvider {
             Buyer buyer = buyers.get(i);
             System.out.println(i+1+". " + buyer.toString());
             int countOfMoney = 0;
-            int withdrawMoney = buyer.getMoney() - indexCount;
-            buyer.setMoney(withdrawMoney);
+            
                
             
         }
@@ -81,16 +89,30 @@ public class ShopProvider {
         System.out.println("Выберите Покупателя: ");
         int indexBuyer = scanner.nextInt();
         Buyer buyer = buyers.get(indexBuyer-1);
-        Purchase purchase = new Purchase(new Date(), buyer, product);
-        Purchase Purchase = new Purchase();
-       Purchase.setProduct(product);
-       Purchase.setBuyer(buyer);
-       Purchase.setGiveOfDate(new Date());
-       System.out.println("Покупатель: "+buyer.getName()+" Корзина: "+countPrice);
-    
-        return purchase;
-       
+        long buyerid = buyer.getId();
+        if( buyerid == indexBuyer ){
+            if(product.getId() == indexProduct){
+                double withdrawMoney = buyer.getMoney() - indexCount * product.getPrice();
+                
+                buyer.setMoney((int) withdrawMoney);
+            
+            }
+            
+        }
         
+        System.out.println("Покупатель: "+buyer.getName()+" Корзина: "+countPrice);
+//        Purchase purchase = new Purchase(new Date (), buyer, product, countPrice);
+//        return purchase;
+        Purchase purchase = new Purchase();
+        purchase.setBuyer(buyer);
+        purchase.setId(buyerid);
+        purchase.setGiveOfDate(new Date());
+        purchase.setMoneyOfShop(countPrice);
+        
+        
+        return purchase;
+        
+       
         
     
    }

@@ -32,15 +32,17 @@ public class Purchase implements Serializable {
         private Buyer buyer;
         @OneToOne
         private Product product;
+        
+        private double moneyOfShop;
 
     public Purchase() {
     }
 
-    public Purchase(Date giveOfDate, Buyer buyer, Product product) {
-        
+    public Purchase(Date giveOfDate, Buyer buyer, Product product, double moneyOfShop) {
         this.giveOfDate = giveOfDate;
         this.buyer = buyer;
         this.product = product;
+        this.moneyOfShop = moneyOfShop;
     }
 
     public Long getId() {
@@ -75,18 +77,29 @@ public class Purchase implements Serializable {
         this.product = product;
     }
 
-    @Override
-    public String toString() {
-        return "Purchase{" + "id=" + id + ", giveOfDate=" + giveOfDate + ", buyer=" + buyer + ", product=" + product + '}';
+    public double getMoneyOfShop() {
+        return moneyOfShop;
+    }
+
+    public void setMoneyOfShop(double moneyOfShop) {
+        this.moneyOfShop = moneyOfShop;
     }
 
     @Override
+    public String toString() {
+        return "Purchase{" + "giveOfDate=" + giveOfDate + ", buyer=" + buyer + ", product=" + product + ", moneyOfShop=" + moneyOfShop + '}';
+    }
+    
+    
+    
+    @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.giveOfDate);
-        hash = 97 * hash + Objects.hashCode(this.buyer);
-        hash = 97 * hash + Objects.hashCode(this.product);
+        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 67 * hash + Objects.hashCode(this.giveOfDate);
+        hash = 67 * hash + Objects.hashCode(this.buyer);
+        hash = 67 * hash + Objects.hashCode(this.product);
+        hash = 67 * hash + (int) (Double.doubleToLongBits(this.moneyOfShop) ^ (Double.doubleToLongBits(this.moneyOfShop) >>> 32));
         return hash;
     }
 
@@ -102,6 +115,9 @@ public class Purchase implements Serializable {
             return false;
         }
         final Purchase other = (Purchase) obj;
+        if (Double.doubleToLongBits(this.moneyOfShop) != Double.doubleToLongBits(other.moneyOfShop)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -116,6 +132,9 @@ public class Purchase implements Serializable {
         }
         return true;
     }
+
+    
+    
         
         
         

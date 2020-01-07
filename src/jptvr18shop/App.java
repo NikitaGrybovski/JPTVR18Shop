@@ -76,14 +76,15 @@ private Saveble saveble;
                     do{
                     ShopProvider shopProvider = new ShopProvider();
                     Purchase purchase = shopProvider.takeOnProduct(product, buyer, purchases);
+                    
                     saveble.savePurchases(purchases);
                     System.out.println("Продолжить покупку, если да то введите 1, если нет то 0");
                     int rep = scanner.nextInt();
-                    if (rep == 0){
-                        buys = false;
-                    }else if(rep== 1){
-                        buys = true;
-                    }
+                        if (rep == 0){
+                            buys = false;
+                        }else if(rep== 1){
+                            buys = true;
+                        }
                     }while(buys);
                     
                     

@@ -34,7 +34,7 @@ public class Buyer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
      private String name; 
-     private int money;
+     private double money;
 
     public Buyer() {
     }
@@ -61,7 +61,7 @@ public class Buyer implements Serializable {
         this.name = name;
     }
 
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
@@ -76,10 +76,10 @@ public class Buyer implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 5;
         hash = 29 * hash + Objects.hashCode(this.id);
         hash = 29 * hash + Objects.hashCode(this.name);
-        hash = 29 * hash + this.money;
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.money) ^ (Double.doubleToLongBits(this.money) >>> 32));
         return hash;
     }
 
@@ -95,7 +95,7 @@ public class Buyer implements Serializable {
             return false;
         }
         final Buyer other = (Buyer) obj;
-        if (this.money != other.money) {
+        if (Double.doubleToLongBits(this.money) != Double.doubleToLongBits(other.money)) {
             return false;
         }
         if (!Objects.equals(this.name, other.name)) {
@@ -106,6 +106,8 @@ public class Buyer implements Serializable {
         }
         return true;
     }
+
+    
      
     
      
